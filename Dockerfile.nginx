@@ -1,4 +1,4 @@
-FROM fedora
+FROM fedora:38
 
 RUN dnf -y install procps less file nginx; dnf clean all; systemctl enable nginx.service
 
