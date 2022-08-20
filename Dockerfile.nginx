@@ -1,6 +1,25 @@
 FROM fedora:38
 
-RUN dnf -y install procps less file nginx; dnf clean all; systemctl enable nginx.service
+### See https://github.com/devilbox/docker-php-fpm/blob/master/Dockerfiles/base/Dockerfile-8.2
+
+###
+### Envs
+###
+ENV MY_USER="user" \
+	MY_GROUP="user" \
+	MY_UID="1000" \
+	MY_GID="1000"
+
+RUN dnf -y install passwd ssh-agent openssh-clients procps less file nginx; dnf clean all; systemctl enable nginx.service
+
+###
+### Add non root User/Group
+###
+RUN set -eux \
+	&& groupadd -g ${MY_GID} -r ${MY_GROUP} \
+	&& useradd -u ${MY_UID} -m -s /bin/bash -g ${MY_GROUP} ${MY_USER} \
+    && passwd -d user \
+    && usermod -aG wheel user
 
 EXPOSE 80
 
