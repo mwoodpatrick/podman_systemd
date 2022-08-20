@@ -12,4 +12,10 @@ stop:
 
 rm: stop
 	podman container rm westiec_nginx
+
+tag:
+	podman tag nginx_systemd quay.io/mwoodpatrick/nginx_systemd:latest
+
+push:
+	podman push quay.io/mwoodpatrick/nginx_systemd:latest
 			
