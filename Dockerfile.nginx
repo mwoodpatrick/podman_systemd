@@ -10,7 +10,12 @@ ENV MY_USER="user" \
 	MY_UID="1000" \
 	MY_GID="1000"
 
-RUN dnf -y install passwd ssh-agent openssh-clients procps less file nginx; dnf clean all; systemctl enable nginx.service
+RUN dnf -y install passwd \
+    openssh-server openssh-clients \
+	procps less file hostname nginx \
+    && dnf clean all \
+	&& systemctl enable nginx.service \
+	&& systemctl enable sshd
 
 ###
 ### Add non root User/Group

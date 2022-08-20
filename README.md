@@ -10,10 +10,13 @@ To run the container so that it uses the user/group id's of the host user add "-
 
 [System Administrator’s Guide](https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/)
 
-To enable sshd & ssh-agent install: ssh-agent & openssh-client
+To enable sshd & ssh-agent install: openssh-server & openssh-client
 
 [How to install, start and connect to SSH Server on Fedora Linux](https://linuxconfig.org/how-to-install-start-and-connect-to-ssh-server-on-fedora-linux)
 [ssh-agent](https://command-not-found.com/ssh-agent)
+
+sudo systemctl status sshd
+sudo systemctl status nginx
 
 https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/servers/Configuring_NTP_Using_ntpd/
 
