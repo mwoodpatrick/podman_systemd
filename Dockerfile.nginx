@@ -1,6 +1,6 @@
 FROM fedora
 
-RUN dnf -y install procps less nginx; dnf clean all; systemctl enable nginx.service
+RUN dnf -y install procps less file nginx; dnf clean all; systemctl enable nginx.service
 
 EXPOSE 80
 
