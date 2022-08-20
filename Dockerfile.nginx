@@ -2,6 +2,17 @@ FROM fedora:38
 
 ### See https://github.com/devilbox/docker-php-fpm/blob/master/Dockerfiles/base/Dockerfile-8.2
 
+LABEL "maintainer"="mwoodpatrick <mwoodpatrick@gmail.com"
+LABEL "org.opencontainers.image.authors"="mwoodpatrick <mwoodpatrick@gamil.com"
+LABEL "org.opencontainers.image.url"="https://github.com/devilbox/docker-php-fpm"
+LABEL "org.opencontainers.image.documentation"="https://github.com/mwoodpatrick/podman_systemd/blob/base/README.md"
+LABEL "org.opencontainers.image.source"="https://github.com/mwoodpatrick/podman_systemd"
+LABEL "org.opencontainers.image.vendor"="westie-soft"
+LABEL "org.opencontainers.image.licenses"="MIT"
+LABEL "org.opencontainers.image.ref.name"="0.1-base"
+LABEL "org.opencontainers.image.title"="podman_systemd"
+LABEL "org.opencontainers.image.description"="Some experiments with Podman, WSL-2 & systemd"
+
 ###
 ### Envs
 ###
@@ -10,6 +21,9 @@ ENV MY_USER="user" \
 	MY_UID="1000" \
 	MY_GID="1000"
 
+###
+### Upgrade (install base software)
+###
 RUN dnf -y install passwd \
     openssh-server openssh-clients \
 	procps less file hostname nginx \
@@ -26,6 +40,17 @@ RUN set -eux \
     && passwd -d user \
     && usermod -aG wheel user
 
+###
+### Ports
+###
+### ssh
+EXPOSE 22
+
+### nginx
 EXPOSE 80
 
+###
+### Entrypoint
+###
+### systemd
 CMD [ "/sbin/init" ]
