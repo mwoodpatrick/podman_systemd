@@ -24,7 +24,7 @@ ENV MY_USER="user" \
 ###
 ### Upgrade (install base software)
 ###
-RUN dnf -y install passwd \
+RUN dnf -y install passwd neovim \
     openssh-server openssh-clients \
 	procps less file hostname nginx \
     && dnf clean all \
