@@ -27,6 +27,7 @@ ENV MY_USER="user" \
 RUN dnf -y install passwd neovim \
     openssh-server openssh-clients \
 	procps less file hostname nginx \
+	php php-cli phpunit composer php-mysqli php-fpm \
     && dnf clean all \
 	&& systemctl enable nginx.service \
 	&& systemctl enable sshd
