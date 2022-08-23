@@ -24,13 +24,20 @@ ENV MY_USER="user" \
 ###
 ### Upgrade (install base software)
 ###
-RUN dnf -y install passwd neovim \
+RUN dnf upgrade --refresh -y \
+    && dnf module enable mariadb:10.8 \
+    && dnf -y install passwd neovim \
     openssh-server openssh-clients \
 	procps less file hostname nginx \
 	php php-cli phpunit composer php-mysqli php-fpm \
+    dnf-plugins-core \
+    mariadb-server mariadb  mariadb-devel \
     && dnf clean all \
 	&& systemctl enable nginx.service \
-	&& systemctl enable sshd
+	&& systemctl enable sshd \
+    && systemctl enable mariadb --now \
+    && systemctl start mariadb \
+    # && systemctl status mariadb \
 
 ###
 ### Add non root User/Group
