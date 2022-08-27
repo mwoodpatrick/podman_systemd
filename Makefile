@@ -1,10 +1,15 @@
+CWD := $(shell pwd)
+
 build:
 	podman build --tag nginx_systemd --file Dockerfile.nginx
     
 run:
-	podman run --uidmap 1000:0:1 --uidmap 0:1:1000 --name westiec_nginx --hostname westiec -d -p 8082:80 -v /projects:/projects:z -v /home/user/:/home/user:z nginx_systemd	
+	podman run --uidmap 1000:0:1 --uidmap 0:1:1000 --name westiec_nginx --hostname westiec -d -p 8082:80 -v /projects:/projects:z -v /home/user/:/home/user:z -v maria_db:/var/lib/mysql:Z nginx_systemd
 	
 start: run	
+
+restart:
+	podman restart westiec_nginx
 
 exec:
 	podman exec -it westiec_nginx bash
