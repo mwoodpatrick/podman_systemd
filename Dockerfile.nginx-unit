@@ -1,0 +1,62 @@
+FROM fedora:38
+LABEL "maintainer"="mwoodpatrick <mwoodpatrick@gmail.com"
+LABEL "org.opencontainers.image.authors"="mwoodpatrick <mwoodpatrick@gamil.com"
+LABEL "org.opencontainers.image.documentation"="https://github.com/mwoodpatrick/podman_systemd/blob/base/README.md"
+LABEL "org.opencontainers.image.source"="https://github.com/mwoodpatrick/podman_systemd"
+LABEL "org.opencontainers.image.vendor"="westie-soft"
+LABEL "org.opencontainers.image.licenses"="MIT"
+LABEL "org.opencontainers.image.ref.name"="0.1-base"
+LABEL "org.opencontainers.image.title"="podman_systemd"
+LABEL "org.opencontainers.image.description"="Some experiments with Podman, WSL-2 & systemd"
+
+###
+### Envs
+###
+ENV MY_USER="user" \
+	MY_GROUP="user" \
+	MY_UID="1000" \
+	MY_GID="1000"
+
+###
+### Upgrade (install base software)
+###
+###    && npm install -g node-gyp \
+### && curl -sL https://rpm.nodesource.com/setup_X.Y | bash - \
+### java-X.Y.Z-openjdk-devel
+RUN dnf upgrade --refresh -y \
+    && dnf module enable mariadb:10.7 -y \
+    && dnf -y install passwd which wget neovim \
+    gcc make golang nodejs openssl-devel pcre2-devel \
+    openssh-server openssh-clients \
+	procps less file hostname \
+	php php-cli phpunit composer php-mysqli php-devel php-embedded \
+    perl-devel perl-libs python-devel ruby-devel rubygem-rack \
+    dnf-plugins-core \
+    mariadb-server mariadb  mariadb-devel \
+    && dnf clean all \
+	&& systemctl enable sshd \
+    && systemctl enable mariadb
+
+###
+### Add non root User/Group
+###
+RUN set -eux \
+	&& groupadd -g ${MY_GID} -r ${MY_GROUP} \
+	&& useradd -u ${MY_UID} -m -s /bin/bash -g ${MY_GROUP} ${MY_USER} \
+    && passwd -d user \
+    && usermod -aG wheel user
+
+###
+### Ports
+###
+### ssh
+EXPOSE 22
+
+### nginx
+EXPOSE 80
+
+###
+### Entrypoint
+###
+### systemd
+CMD [ "/sbin/init" ]
