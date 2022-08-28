@@ -26,7 +26,7 @@ ENV MY_USER="user" \
 ###
 RUN dnf upgrade --refresh -y \
     && dnf module enable mariadb:10.7 -y \
-    && dnf -y install passwd which neovim \
+    && dnf -y install passwd which wget neovim \
     openssh-server openssh-clients \
 	procps less file hostname nginx \
 	php php-cli phpunit composer php-mysqli php-fpm \
