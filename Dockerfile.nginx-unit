@@ -28,12 +28,13 @@ RUN dnf upgrade --refresh -y \
     && dnf -y install passwd which wget neovim \
     gcc make golang nodejs openssl-devel pcre2-devel \
     openssh-server openssh-clients \
-	procps less file hostname \
+	procps less file hostname nginx \
 	php php-cli phpunit composer php-mysqli php-devel php-embedded \
     perl-devel perl-libs python-devel ruby-devel rubygem-rack \
     dnf-plugins-core \
     mariadb-server mariadb  mariadb-devel \
     && dnf clean all \
+    && systemctl enable nginx.service \
 	&& systemctl enable sshd \
     && systemctl enable mariadb
 
