@@ -1,4 +1,4 @@
-FROM fedora:38
+FROM rockylinux:9
 LABEL "maintainer"="mwoodpatrick <mwoodpatrick@gmail.com"
 LABEL "org.opencontainers.image.authors"="mwoodpatrick <mwoodpatrick@gamil.com"
 LABEL "org.opencontainers.image.documentation"="https://github.com/mwoodpatrick/podman_systemd/blob/base/README.md"
@@ -23,23 +23,29 @@ ENV MY_USER="user" \
 ###    && npm install -g node-gyp \
 ### && curl -sL https://rpm.nodesource.com/setup_X.Y | bash - \
 ### java-X.Y.Z-openjdk-devel
-RUN dnf upgrade --refresh -y \
-    && dnf module enable mariadb:10.7 -y \
-    && dnf -y install passwd which wget neovim  libffi-devel.x86_64 \
-    gcc make golang nodejs openssl-devel pcre2-devel \
-    openssh-server openssh-clients \
-	procps less file hostname nginx \
-	php php-cli phpunit composer php-mysqli php-devel php-embedded \
-    perl-devel perl-libs python-devel ruby-devel rubygem-rack \
+RUN dnf upgrade --refresh -y 
+RUN dnf -y install epel-release
+RUN dnf -y install dnf-utils 
+RUN dnf -y install http://rpms.remirepo.net/enterprise/remi-release-9.rpm 
+RUN dnf module enable -y php:remi-8.2 
+RUN dnf -y install epel-release passwd which wget neovim  libffi-devel.x86_64 \
+    gcc make golang nodejs openssl-devel pcre2-devel 
+ RUN dnf -y install   openssh-server openssh-clients \
+	procps less file hostname nginx
+    # phpunit not found
+RUN dnf -y install	php php-cli composer php-mysqli php-devel php-embedded \
+    # rubygem-rack not found
+RUN     dnf -y install perl-devel perl-libs python-devel ruby-devel  \
     dnf-plugins-core \
-    mariadb-server mariadb  mariadb-devel \
+    # mariadb-devel not found
+    mariadb-server mariadb   \
     rpm-build rpmlint perl-ExtUtils-Embed \
     java-1.8.0-openjdk-devel java-1.8.0-openjdk-devel \
     java-11-openjdk-devel \
-    && dnf clean all \
+    && dnf clean all 
     # && systemctl enable nginx.service \
-	&& systemctl enable sshd \
-    && systemctl enable mariadb
+	# && systemctl enable sshd \
+    # && systemctl enable mariadb
 
 ###
 ### Add non root User/Group

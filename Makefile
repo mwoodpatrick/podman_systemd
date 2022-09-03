@@ -1,5 +1,5 @@
-IMAGE=nginx-unit_systemd
-CONTAINER=westiec_nginx-unit
+IMAGE=rocky-nginx-unit_systemd
+CONTAINER=rocky-westiec_nginx-unit
 CWD := $(shell pwd)
 
 build:
