@@ -6,8 +6,16 @@ build:
 	podman build --tag ${IMAGE} --file Dockerfile.nginx-unit
     
 run:
-	podman run --uidmap 1000:0:1 --uidmap 0:1:1000 --name ${CONTAINER} --hostname westiec -d -p 8082:80 -v /projects:/projects:z -v /home/user/:/home/user:z -v maria_db:/var/lib/mysql:Z -v nginx:/etc/nginx:Z ${IMAGE}
-	
+	podman run --uidmap 1000:0:1 --uidmap 0:1:1000 --name ${CONTAINER} \
+	 --hostname westiec \
+	 -d -p 8082:80 \
+	 -v /projects:/projects:z \
+	 -v /home/user/:/home/user:z \
+	 -v maria_db:/var/lib/mysql:Z \
+	 -v nginx:/etc/nginx:Z \
+ 	 -v www:/var/www:Z \
+	 ${IMAGE}
+
 start: run	
 
 restart:

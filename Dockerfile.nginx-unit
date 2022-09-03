@@ -25,7 +25,7 @@ ENV MY_USER="user" \
 ### java-X.Y.Z-openjdk-devel
 RUN dnf upgrade --refresh -y \
     && dnf module enable mariadb:10.7 -y \
-    && dnf -y install passwd which wget neovim \
+    && dnf -y install passwd which wget neovim  libffi-devel.x86_64 \
     gcc make golang nodejs openssl-devel pcre2-devel \
     openssh-server openssh-clients \
 	procps less file hostname nginx \
@@ -33,8 +33,11 @@ RUN dnf upgrade --refresh -y \
     perl-devel perl-libs python-devel ruby-devel rubygem-rack \
     dnf-plugins-core \
     mariadb-server mariadb  mariadb-devel \
+    rpm-build rpmlint perl-ExtUtils-Embed \
+    java-1.8.0-openjdk-devel java-1.8.0-openjdk-devel \
+    java-11-openjdk-devel \
     && dnf clean all \
-    && systemctl enable nginx.service \
+    # && systemctl enable nginx.service \
 	&& systemctl enable sshd \
     && systemctl enable mariadb
 
