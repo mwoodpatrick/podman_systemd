@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "name": "node_unit",
+  "version": "1.0.0",
+  "description": "My simple node app using NGINX unit",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mark L Wood-Patrick",
+  "license": "ISC"
+}

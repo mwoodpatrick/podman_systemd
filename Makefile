@@ -7,8 +7,9 @@ build:
     
 run:
 	podman run --uidmap 1000:0:1 --uidmap 0:1:1000 --name ${CONTAINER} \
-	 --hostname westiec \
-	 -d -p 8082:80 \
+	 --hostname westiec -d \
+	 -p 8022:22 \
+     -p 8082:80 \
 	 -v /projects:/projects:z \
 	 -v /home/user/:/home/user:z \
 	 -v maria_db:/var/lib/mysql:Z \

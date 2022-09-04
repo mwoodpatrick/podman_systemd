@@ -1,0 +1,23 @@
+{
+    "listeners": {
+        "*:80": {
+            "pass": "applications/express"
+        }
+    },
+
+    "applications": {
+        "express": {
+            "type": "external",
+            "working_directory": "/projects/git/mwoodpatrick/podman_systemd/nginx-unit/node",
+            "executable": "/usr/bin/env",
+            "arguments": [
+                "node",
+                "--loader",
+                "unit-http/loader.mjs",
+                "--require",
+                "unit-http/loader",
+                "app.js"
+            ]
+        }
+    }
+}
