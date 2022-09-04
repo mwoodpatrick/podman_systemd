@@ -1,0 +1,322 @@
+podman build --tag nginx-unit_systemd --file Dockerfile.nginx-unit
+STEP 1/18: FROM fedora:36
+STEP 2/18: LABEL "maintainer"="mwoodpatrick <mwoodpatrick@gmail.com"
+--> Using cache 234f8df871deb4db91edea9af29381aa5b54730bd07a2eb799ed4e2f02b9aa9b
+--> 234f8df871d
+STEP 3/18: LABEL "org.opencontainers.image.authors"="mwoodpatrick <mwoodpatrick@gamil.com"
+--> Using cache bf6f4e0f1fe5122eb78a2986bbb0b667a61d451d631219b681a486b832207a61
+--> bf6f4e0f1fe
+STEP 4/18: LABEL "org.opencontainers.image.documentation"="https://github.com/mwoodpatrick/podman_systemd/blob/base/README.md"
+--> Using cache 9b8d2022d3e6fa1d1491d304a68cc6f4dfc538438931a2573f66aa0b589af725
+--> 9b8d2022d3e
+STEP 5/18: LABEL "org.opencontainers.image.source"="https://github.com/mwoodpatrick/podman_systemd"
+--> Using cache 0dade63dceec5570e26812c0c370eddbc3dfe3e677c18f7a9c5cf2b266ac584e
+--> 0dade63dcee
+STEP 6/18: LABEL "org.opencontainers.image.vendor"="westie-soft"
+--> Using cache d3632eac917517ba79418d74337cc04117e12c494c23bce75ef9db9e56ff646a
+--> d3632eac917
+STEP 7/18: LABEL "org.opencontainers.image.licenses"="MIT"
+--> Using cache 4eacbadd1cf6c717c5d44af685fde6a5228b78be872f13776756f5222cf3cb67
+--> 4eacbadd1cf
+STEP 8/18: LABEL "org.opencontainers.image.ref.name"="0.1-base"
+--> Using cache 0751162ed733a0e5b01812ece8114dd546f051fcf5b6864857115abfe866ef24
+--> 0751162ed73
+STEP 9/18: LABEL "org.opencontainers.image.title"="podman_systemd"
+--> Using cache f12b94b8ad6be15e927c27bf0990dff86ed0b5580259ebb80d6e12b4fa668a25
+--> f12b94b8ad6
+STEP 10/18: LABEL "org.opencontainers.image.description"="Some experiments with Podman, WSL-2 & systemd"
+--> Using cache 49adbc92fbc26c1e84ec47fd5e9badd110626e72cc07c080958c3045fad79bd9
+--> 49adbc92fbc
+STEP 11/18: ENV MY_USER="user"     MY_GROUP="user"     MY_UID="1000"     MY_GID="1000"
+--> Using cache c94551905a0e758f5a88f1c1e620cf3912937276083545f0650af7afa5994e0c
+--> c94551905a0
+STEP 12/18: RUN dnf upgrade --refresh -y     && dnf module enable mariadb:10.7 -y     && dnf -y install passwd which wget neovim libffi-devel.x86_64     gcc make golang nodejs openssl-devel pcre2-devel     openssh-server openssh-clients     procps less file hostname nginx     php php-cli phpunit composer php-mysqli php-devel php-embedded     perl-devel perl-libs python-devel ruby-devel rubygem-rack     dnf-plugins-core     mariadb-server mariadb  mariadb-devel     rpm-build rpmlint perl-ExtUtils-Embed     java-1.8.0-openjdk-devel java-1.8.0-openjdk-devel     java-11-openjdk-devel     && systemctl enable sshd     && systemctl enable mariadb
+--> Using cache ed653c492124e6ed6693ba1fff50e25546fbfc1f105d1ac0975df332e0e414b6
+--> ed653c49212
+STEP 13/18: COPY nginx-unit/unit.repo /etc/yum.repos.d
+--> Using cache e48acc007f56defd33dc9f43c1f94ce6d0659e9c15db35f02151098e4130cb5e
+--> e48acc007f5
+STEP 14/18: RUN dnf -y install unit unit-debuginfo.x86_64 unit-devel.x86_64 unit-go.noarch unit-jsc-common.noarch     unit-jsc11.x86_64 unit-jsc11-debuginfo.x86_64 unit-jsc8.x86_64 unit-jsc8-debuginfo.x86_64     unit-perl.x86_64 unit-perl-debuginfo.x86_64 unit-php.x86_64 unit-php-debuginfo.x86_64     unit-python310.x86_64 unit-python310-debuginfo.x86_64 unit-ruby.x86_64 unit-ruby-debuginfo.x86_64     && dnf clean all     && systemctl enable unit
+unit repo                                       4.2 kB/s | 6.3 kB     00:01
+Dependencies resolved.
+================================================================================
+ Package                     Arch      Version                 Repository  Size
+================================================================================
+Installing:
+ unit                        x86_64    1.27.0-1.fc36.ngx       unit       383 k
+ unit-debuginfo              x86_64    1.27.0-1.fc36.ngx       unit       1.3 M
+ unit-devel                  x86_64    1.27.0-1.fc36.ngx       unit        78 k
+ unit-go                     noarch    1.27.0-1.fc36.ngx       unit        16 k
+ unit-jsc-common             noarch    1.27.0-1.fc36.ngx       unit       6.1 M
+ unit-jsc11                  x86_64    1.27.0-1.fc36.ngx       unit       342 k
+ unit-jsc11-debuginfo        x86_64    1.27.0-1.fc36.ngx       unit       249 k
+ unit-jsc8                   x86_64    1.27.0-1.fc36.ngx       unit       343 k
+ unit-jsc8-debuginfo         x86_64    1.27.0-1.fc36.ngx       unit       249 k
+ unit-perl                   x86_64    1.27.0-1.fc36.ngx       unit        64 k
+ unit-perl-debuginfo         x86_64    1.27.0-1.fc36.ngx       unit       218 k
+ unit-php                    x86_64    1.27.0-1.fc36.ngx       unit        58 k
+ unit-php-debuginfo          x86_64    1.27.0-1.fc36.ngx       unit       191 k
+ unit-python310              x86_64    1.27.0-1.fc36.ngx       unit        95 k
+ unit-python310-debuginfo    x86_64    1.27.0-1.fc36.ngx       unit       309 k
+ unit-ruby                   x86_64    1.27.0-1.fc36.ngx       unit        66 k
+ unit-ruby-debuginfo         x86_64    1.27.0-1.fc36.ngx       unit       214 k
+Installing dependencies:
+ java-17-openjdk-headless    x86_64    1:17.0.4.0.8-1.fc36     updates     40 M
+
+Transaction Summary
+================================================================================
+Install  18 Packages
+
+Total download size: 50 M
+Installed size: 206 M
+Downloading Packages:
+(1/18): unit-1.27.0-1.fc36.ngx.x86_64.rpm       243 kB/s | 383 kB     00:01
+(2/18): unit-debuginfo-1.27.0-1.fc36.ngx.x86_64 727 kB/s | 1.3 MB     00:01
+(3/18): unit-devel-1.27.0-1.fc36.ngx.x86_64.rpm 383 kB/s |  78 kB     00:00
+(4/18): unit-go-1.27.0-1.fc36.ngx.noarch.rpm     95 kB/s |  16 kB     00:00
+(5/18): unit-jsc11-1.27.0-1.fc36.ngx.x86_64.rpm 298 kB/s | 342 kB     00:01
+(6/18): unit-jsc11-debuginfo-1.27.0-1.fc36.ngx. 1.3 MB/s | 249 kB     00:00
+(7/18): unit-jsc-common-1.27.0-1.fc36.ngx.noarc 4.0 MB/s | 6.1 MB     00:01
+(8/18): unit-jsc8-debuginfo-1.27.0-1.fc36.ngx.x 1.2 MB/s | 249 kB     00:00
+(9/18): unit-perl-1.27.0-1.fc36.ngx.x86_64.rpm  372 kB/s |  64 kB     00:00
+(10/18): unit-perl-debuginfo-1.27.0-1.fc36.ngx. 1.1 MB/s | 218 kB     00:00
+(11/18): unit-php-1.27.0-1.fc36.ngx.x86_64.rpm  339 kB/s |  58 kB     00:00
+(12/18): unit-php-debuginfo-1.27.0-1.fc36.ngx.x 1.0 MB/s | 191 kB     00:00
+(13/18): unit-jsc8-1.27.0-1.fc36.ngx.x86_64.rpm 318 kB/s | 343 kB     00:01
+(14/18): unit-python310-1.27.0-1.fc36.ngx.x86_6 546 kB/s |  95 kB     00:00
+(15/18): unit-python310-debuginfo-1.27.0-1.fc36 1.6 MB/s | 309 kB     00:00
+(16/18): unit-ruby-1.27.0-1.fc36.ngx.x86_64.rpm 383 kB/s |  66 kB     00:00
+(17/18): unit-ruby-debuginfo-1.27.0-1.fc36.ngx. 1.2 MB/s | 214 kB     00:00
+(18/18): java-17-openjdk-headless-17.0.4.0.8-1. 1.1 MB/s |  40 MB     00:35
+--------------------------------------------------------------------------------
+Total                                           1.4 MB/s |  50 MB     00:35
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Running scriptlet: java-17-openjdk-headless-1:17.0.4.0.8-1.fc36.x86_64    1/1
+  Preparing        :                                                        1/1
+  Installing       : unit-1.27.0-1.fc36.ngx.x86_64                         1/18
+  Running scriptlet: unit-1.27.0-1.fc36.ngx.x86_64                         1/18
+----------------------------------------------------------------------
+
+Thank you for installing NGINX Unit!
+
+Additional modules are available in standalone packages.
+To see the available modules, run "yum list available unit-\*".
+
+Online documentation is available at https://unit.nginx.org/
+
+----------------------------------------------------------------------
+
+  Installing       : unit-jsc-common-1.27.0-1.fc36.ngx.noarch              2/18
+  Running scriptlet: unit-jsc-common-1.27.0-1.fc36.ngx.noarch              2/18
+----------------------------------------------------------------------
+
+The Java shared packages for NGINX Unit have been installed.
+
+Please find licenses and related information here:
+  /usr/share/doc/unit-jsc-common/COPYRIGHT
+
+----------------------------------------------------------------------
+
+  Installing       : java-17-openjdk-headless-1:17.0.4.0.8-1.fc36.x86_6    3/18
+  Running scriptlet: java-17-openjdk-headless-1:17.0.4.0.8-1.fc36.x86_6    3/18
+  Installing       : unit-devel-1.27.0-1.fc36.ngx.x86_64                   4/18
+  Installing       : unit-go-1.27.0-1.fc36.ngx.noarch                      5/18
+  Running scriptlet: unit-go-1.27.0-1.fc36.ngx.noarch                      5/18
+----------------------------------------------------------------------
+
+The Go module for NGINX Unit has been installed.
+
+To check the sample app, run these commands:
+
+ GOPATH=/usr/share/gocode GO111MODULE=auto go build -o /tmp/go-app /usr/share/doc/unit-go/examples/go-app/let-my-people.go
+ sudo service unit start
+ cd /usr/share/doc/unit-go/examples
+ sudo curl -X PUT --data-binary @unit.config --unix-socket /var/run/unit/control.sock http://localhost/config
+ curl http://localhost:8500/
+
+Online documentation is available at https://unit.nginx.org
+
+----------------------------------------------------------------------
+
+  Installing       : unit-jsc11-1.27.0-1.fc36.ngx.x86_64                   6/18
+  Running scriptlet: unit-jsc11-1.27.0-1.fc36.ngx.x86_64                   6/18
+cat: /usr/share/doc/unit-jsc11/README.JSR-340: No such file or directory
+----------------------------------------------------------------------
+
+The Java 11 module for NGINX Unit has been installed.
+
+To check out the sample app, run these commands:
+
+ sudo service unit restart
+ cd /usr/share/doc/unit-jsc11/examples
+ sudo curl -X PUT --data-binary @unit.config --unix-socket /var/run/unit/control.sock http://localhost/config
+ curl http://localhost:8800/
+
+Online documentation is available at https://unit.nginx.org
+
+
+
+----------------------------------------------------------------------
+
+  Installing       : unit-jsc8-1.27.0-1.fc36.ngx.x86_64                    7/18
+  Running scriptlet: unit-jsc8-1.27.0-1.fc36.ngx.x86_64                    7/18
+cat: /usr/share/doc/unit-jsc8/README.JSR-340: No such file or directory
+----------------------------------------------------------------------
+
+The Java 8 module for NGINX Unit has been installed.
+
+To check out the sample app, run these commands:
+
+ sudo service unit restart
+ cd /usr/share/doc/unit-jsc8/examples
+ sudo curl -X PUT --data-binary @unit.config --unix-socket /var/run/unit/control.sock http://localhost/config
+ curl http://localhost:8800/
+
+Online documentation is available at https://unit.nginx.org
+
+
+
+----------------------------------------------------------------------
+
+  Installing       : unit-perl-1.27.0-1.fc36.ngx.x86_64                    8/18
+  Running scriptlet: unit-perl-1.27.0-1.fc36.ngx.x86_64                    8/18
+----------------------------------------------------------------------
+
+The Perl module for NGINX Unit has been installed.
+
+To check out the sample app, run these commands:
+
+ sudo service unit start
+ cd /usr/share/doc/unit-perl/examples
+ sudo curl -X PUT --data-binary @unit.config --unix-socket /var/run/unit/control.sock http://localhost/config
+ curl http://localhost:8600/
+
+Online documentation is available at https://unit.nginx.org
+
+----------------------------------------------------------------------
+
+  Installing       : unit-php-1.27.0-1.fc36.ngx.x86_64                     9/18
+  Running scriptlet: unit-php-1.27.0-1.fc36.ngx.x86_64                     9/18
+----------------------------------------------------------------------
+
+The PHP module for NGINX Unit has been installed.
+
+To check out the sample app, run these commands:
+
+ sudo service unit start
+ cd /usr/share/doc/unit-php/examples
+ sudo curl -X PUT --data-binary @unit.config --unix-socket /var/run/unit/control.sock http://localhost/config
+ curl http://localhost:8300/
+
+Online documentation is available at https://unit.nginx.org
+
+----------------------------------------------------------------------
+
+  Installing       : unit-python310-1.27.0-1.fc36.ngx.x86_64              10/18
+  Running scriptlet: unit-python310-1.27.0-1.fc36.ngx.x86_64              10/18
+----------------------------------------------------------------------
+
+The Python 3.10 module for NGINX Unit has been installed.
+
+To check the sample app, run these commands:
+
+ sudo service unit start
+ cd /usr/share/doc/unit-python310/examples
+ sudo curl -X PUT --data-binary @unit.config --unix-socket /var/run/unit/control.sock http://localhost/config
+ curl http://localhost:8400/
+
+Online documentation is available at https://unit.nginx.org
+
+----------------------------------------------------------------------
+
+  Installing       : unit-ruby-1.27.0-1.fc36.ngx.x86_64                   11/18
+  Running scriptlet: unit-ruby-1.27.0-1.fc36.ngx.x86_64                   11/18
+----------------------------------------------------------------------
+
+The Ruby module for NGINX Unit has been installed.
+
+To check the sample app, run these commands:
+
+ sudo service unit start
+ cd /usr/share/doc/unit-ruby/examples
+ sudo curl -X PUT --data-binary @unit.config --unix-socket /var/run/unit/control.sock http://localhost/config
+ curl http://localhost:8700/
+
+Online documentation is available at https://unit.nginx.org
+
+----------------------------------------------------------------------
+
+  Installing       : unit-ruby-debuginfo-1.27.0-1.fc36.ngx.x86_64         12/18
+  Installing       : unit-python310-debuginfo-1.27.0-1.fc36.ngx.x86_64    13/18
+  Installing       : unit-php-debuginfo-1.27.0-1.fc36.ngx.x86_64          14/18
+  Installing       : unit-perl-debuginfo-1.27.0-1.fc36.ngx.x86_64         15/18
+  Installing       : unit-jsc8-debuginfo-1.27.0-1.fc36.ngx.x86_64         16/18
+  Installing       : unit-jsc11-debuginfo-1.27.0-1.fc36.ngx.x86_64        17/18
+  Installing       : unit-debuginfo-1.27.0-1.fc36.ngx.x86_64              18/18
+  Running scriptlet: java-17-openjdk-headless-1:17.0.4.0.8-1.fc36.x86_6   18/18
+  Running scriptlet: unit-debuginfo-1.27.0-1.fc36.ngx.x86_64              18/18
+  Verifying        : java-17-openjdk-headless-1:17.0.4.0.8-1.fc36.x86_6    1/18
+  Verifying        : unit-1.27.0-1.fc36.ngx.x86_64                         2/18
+  Verifying        : unit-debuginfo-1.27.0-1.fc36.ngx.x86_64               3/18
+  Verifying        : unit-devel-1.27.0-1.fc36.ngx.x86_64                   4/18
+  Verifying        : unit-go-1.27.0-1.fc36.ngx.noarch                      5/18
+  Verifying        : unit-jsc-common-1.27.0-1.fc36.ngx.noarch              6/18
+  Verifying        : unit-jsc11-1.27.0-1.fc36.ngx.x86_64                   7/18
+  Verifying        : unit-jsc11-debuginfo-1.27.0-1.fc36.ngx.x86_64         8/18
+  Verifying        : unit-jsc8-1.27.0-1.fc36.ngx.x86_64                    9/18
+  Verifying        : unit-jsc8-debuginfo-1.27.0-1.fc36.ngx.x86_64         10/18
+  Verifying        : unit-perl-1.27.0-1.fc36.ngx.x86_64                   11/18
+  Verifying        : unit-perl-debuginfo-1.27.0-1.fc36.ngx.x86_64         12/18
+  Verifying        : unit-php-1.27.0-1.fc36.ngx.x86_64                    13/18
+  Verifying        : unit-php-debuginfo-1.27.0-1.fc36.ngx.x86_64          14/18
+  Verifying        : unit-python310-1.27.0-1.fc36.ngx.x86_64              15/18
+  Verifying        : unit-python310-debuginfo-1.27.0-1.fc36.ngx.x86_64    16/18
+  Verifying        : unit-ruby-1.27.0-1.fc36.ngx.x86_64                   17/18
+  Verifying        : unit-ruby-debuginfo-1.27.0-1.fc36.ngx.x86_64         18/18
+
+Installed:
+  java-17-openjdk-headless-1:17.0.4.0.8-1.fc36.x86_64
+  unit-1.27.0-1.fc36.ngx.x86_64
+  unit-debuginfo-1.27.0-1.fc36.ngx.x86_64
+  unit-devel-1.27.0-1.fc36.ngx.x86_64
+  unit-go-1.27.0-1.fc36.ngx.noarch
+  unit-jsc-common-1.27.0-1.fc36.ngx.noarch
+  unit-jsc11-1.27.0-1.fc36.ngx.x86_64
+  unit-jsc11-debuginfo-1.27.0-1.fc36.ngx.x86_64
+  unit-jsc8-1.27.0-1.fc36.ngx.x86_64
+  unit-jsc8-debuginfo-1.27.0-1.fc36.ngx.x86_64
+  unit-perl-1.27.0-1.fc36.ngx.x86_64
+  unit-perl-debuginfo-1.27.0-1.fc36.ngx.x86_64
+  unit-php-1.27.0-1.fc36.ngx.x86_64
+  unit-php-debuginfo-1.27.0-1.fc36.ngx.x86_64
+  unit-python310-1.27.0-1.fc36.ngx.x86_64
+  unit-python310-debuginfo-1.27.0-1.fc36.ngx.x86_64
+  unit-ruby-1.27.0-1.fc36.ngx.x86_64
+  unit-ruby-debuginfo-1.27.0-1.fc36.ngx.x86_64
+
+Complete!
+47 files removed
+Created symlink /etc/systemd/system/multi-user.target.wants/unit.service → /usr/lib/systemd/system/unit.service.
+--> f168b9ca053
+STEP 15/18: RUN set -eux     && groupadd -g ${MY_GID} -r ${MY_GROUP}     && useradd -u ${MY_UID} -m -s /bin/bash -g ${MY_GROUP} ${MY_USER}     && passwd -d user     && usermod -aG wheel user
++ groupadd -g 1000 -r user
++ useradd -u 1000 -m -s /bin/bash -g user user
++ passwd -d user
+passwd: Note: deleting a password also unlocks the password.
+Removing password for user user.
+passwd: Success
++ usermod -aG wheel user
+--> 0ae13fe7d5d
+STEP 16/18: EXPOSE 22
+--> 0302086bca9
+STEP 17/18: EXPOSE 80
+--> eb4cf448282
+STEP 18/18: CMD [ "/sbin/init" ]
+COMMIT nginx-unit_systemd
+--> 608ad81ec6b
+Successfully tagged localhost/nginx-unit_systemd:latest
+608ad81ec6b10a91cfdbab31efc659bb81ae218d40ae8d3ff95c83f31c6501d5

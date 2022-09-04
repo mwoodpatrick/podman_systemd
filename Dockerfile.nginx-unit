@@ -1,4 +1,4 @@
-FROM fedora:38
+FROM fedora:36
 LABEL "maintainer"="mwoodpatrick <mwoodpatrick@gmail.com"
 LABEL "org.opencontainers.image.authors"="mwoodpatrick <mwoodpatrick@gamil.com"
 LABEL "org.opencontainers.image.documentation"="https://github.com/mwoodpatrick/podman_systemd/blob/base/README.md"
@@ -13,9 +13,9 @@ LABEL "org.opencontainers.image.description"="Some experiments with Podman, WSL-
 ### Envs
 ###
 ENV MY_USER="user" \
-	MY_GROUP="user" \
-	MY_UID="1000" \
-	MY_GID="1000"
+    MY_GROUP="user" \
+    MY_UID="1000" \
+    MY_GID="1000"
 
 ###
 ### Upgrade (install base software)
@@ -23,30 +23,36 @@ ENV MY_USER="user" \
 ###    && npm install -g node-gyp \
 ### && curl -sL https://rpm.nodesource.com/setup_X.Y | bash - \
 ### java-X.Y.Z-openjdk-devel
-RUN dnf upgrade --refresh -y \
+    RUN dnf upgrade --refresh -y \
     && dnf module enable mariadb:10.7 -y \
-    && dnf -y install passwd which wget neovim  libffi-devel.x86_64 \
+    && dnf -y install passwd which wget neovim libffi-devel.x86_64 \
     gcc make golang nodejs openssl-devel pcre2-devel \
     openssh-server openssh-clients \
-	procps less file hostname nginx \
-	php php-cli phpunit composer php-mysqli php-devel php-embedded \
+    procps less file hostname nginx \
+    php php-cli phpunit composer php-mysqli php-devel php-embedded \
     perl-devel perl-libs python-devel ruby-devel rubygem-rack \
     dnf-plugins-core \
     mariadb-server mariadb  mariadb-devel \
     rpm-build rpmlint perl-ExtUtils-Embed \
     java-1.8.0-openjdk-devel java-1.8.0-openjdk-devel \
     java-11-openjdk-devel \
-    && dnf clean all \
     # && systemctl enable nginx.service \
-	&& systemctl enable sshd \
+    && systemctl enable sshd \
     && systemctl enable mariadb
+    COPY nginx-unit/unit.repo /etc/yum.repos.d
+    RUN dnf -y install unit unit-debuginfo.x86_64 unit-devel.x86_64 unit-go.noarch unit-jsc-common.noarch \
+    unit-jsc11.x86_64 unit-jsc11-debuginfo.x86_64 unit-jsc8.x86_64 unit-jsc8-debuginfo.x86_64 \
+    unit-perl.x86_64 unit-perl-debuginfo.x86_64 unit-php.x86_64 unit-php-debuginfo.x86_64 \
+    unit-python310.x86_64 unit-python310-debuginfo.x86_64 unit-ruby.x86_64 unit-ruby-debuginfo.x86_64 \
+    && dnf clean all \
+    && systemctl enable unit
 
 ###
 ### Add non root User/Group
 ###
 RUN set -eux \
-	&& groupadd -g ${MY_GID} -r ${MY_GROUP} \
-	&& useradd -u ${MY_UID} -m -s /bin/bash -g ${MY_GROUP} ${MY_USER} \
+    && groupadd -g ${MY_GID} -r ${MY_GROUP} \
+    && useradd -u ${MY_UID} -m -s /bin/bash -g ${MY_GROUP} ${MY_USER} \
     && passwd -d user \
     && usermod -aG wheel user
 

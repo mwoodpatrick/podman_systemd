@@ -1,0 +1,4 @@
+sudo dnf -y install unit-debuginfo.x86_64 unit-devel.x86_64 unit-go.noarch unit-jsc-common.noarch \
+	unit-jsc11.x86_64 unit-jsc11-debuginfo.x86_64 unit-jsc8.x86_64 unit-jsc8-debuginfo.x86_64 \
+	unit-perl.x86_64 unit-perl-debuginfo.x86_64 unit-php.x86_64 unit-php-debuginfo.x86_64 \
+	unit-python310.x86_64 unit-python310-debuginfo.x86_64 unit-ruby.x86_64 unit-ruby-debuginfo.x86_64
