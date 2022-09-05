@@ -1,0 +1,17 @@
+{
+    "listeners": {
+        "*:80": {
+            "pass": "applications/flask"
+        }
+    },
+
+    "applications": {
+        "flask": {
+            "type": "python 3.10",
+            "path": "/projects/git/mwoodpatrick/podman_systemd/nginx-unit/python/flask",
+            "home": "/projects/git/mwoodpatrick/podman_systemd/nginx-unit/python/flask/venv/",
+            "module": "wsgi",
+            "callable": "app"
+        }
+    }
+}
