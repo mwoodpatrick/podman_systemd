@@ -1,4 +1,14 @@
 {
-    "type": "php",
-    "root": "/projects/git/mwoodpatrick/podman_systemd/nginx-unit/php/simple/blogs/scripts"
+    "listeners": {
+        "*:80": {
+            "pass": "applications/simple"
+        }
+    },
+
+    "applications": {
+        "simple": {
+            "type": "php",
+            "root": "/projects/git/mwoodpatrick/podman_systemd/nginx-unit/php/simple/blogs/scripts"
+        }
+    }
 }
