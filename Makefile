@@ -3,7 +3,7 @@ CONTAINER=westiec_nginx-unit
 CWD := $(shell pwd)
 
 build:
-	podman build --tag ${IMAGE} --file Dockerfile.nginx-unit
+	podman build --tag ${IMAGE} --file Dockerfile.nginx-unit 2>&1 | tee image_build.log
     
 run:
 	podman run --uidmap 1000:0:1 --uidmap 0:1:1000 --name ${CONTAINER} \
