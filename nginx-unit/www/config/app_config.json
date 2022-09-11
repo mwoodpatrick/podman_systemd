@@ -1,0 +1,36 @@
+{
+    "listeners": {
+        "*:80": {
+            "pass": "routes"
+        }
+     },
+
+    "routes": [
+        {
+            "match": {
+                "uri": "/static*"
+            },
+            "action": {
+                "share": "/projects/www/$uri"
+            }
+        },
+        {
+            "match": {
+                "uri": "/example_php"
+            },
+
+            "action": {
+                "pass": "applications/example_php"
+            }
+        }
+    ],
+
+    "applications": {
+        "example_php": {
+            "type": "php",
+            "processes": 2,
+            "root": "/projects/www/php/phpinfo-app",
+            "index": "index.php"
+        }
+    }
+}

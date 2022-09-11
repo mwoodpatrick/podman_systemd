@@ -11,6 +11,7 @@ run:
 	 -p 8022:22 \
      -p 8082:80 \
 	 -v /projects:/projects:z \
+     -v /mnt/c/Users/mlwp/Software/WSL:/WSL:z \
 	 -v /home/user/:/home/user:z \
 	 -v maria_db:/var/lib/mysql:Z \
 	 -v nginx:/etc/nginx:Z \

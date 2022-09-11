@@ -1,0 +1,58 @@
+{
+    "listeners": {
+        "*:8080": {
+            "pass": "routes"
+        }
+     },
+
+    "routes": [
+        {
+            "match": {
+                "uri": "/static*"
+            },
+            "action": {
+                "share": "/projects/git/mwoodpatrick/podman_systemd/nginx-unit/www/$uri"
+            }
+        },
+        {
+            "match": {
+                "uri": "/example_php*"
+            },
+
+            "action": {
+                "pass": "applications/example_php"
+            }
+        },
+        {
+            "match": {
+                "uri": "/express*"
+            },
+
+            "action": {
+                "pass": "applications/express"
+            }
+        }
+    ],
+
+    "applications": {
+        "example_php": {
+            "type": "php",
+            "processes": 2,
+            "root": "/projects/git/mwoodpatrick/podman_systemd/nginx-unit/www/php/phpinfo-app",
+            "index": "index.php"
+        },
+        "express": {
+            "type": "external",
+            "working_directory": "/projects/git/mwoodpatrick/podman_systemd/nginx-unit/www/node/example",
+            "executable": "/usr/bin/env",
+            "arguments": [
+                "node",
+                "--loader",
+                "unit-http/loader.mjs",
+                "--require",
+                "unit-http/loader",
+                "app.js"
+            ]
+        }
+    }
+}

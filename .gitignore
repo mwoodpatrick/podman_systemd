@@ -1,5 +1,8 @@
 data
 *.log
 nginx-unit/node/node_modules
+nginx-unit/www/node/example/node_modules/*
+nginx-unit/www/node/example/node_modules
 **/venv/*
+**/node_modules/*
 **/__pycache__/*
