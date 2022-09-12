@@ -8,11 +8,17 @@ MODULES=/usr/lib64/unit/modules
 # MODULES=/projects/git/mwoodpatrick/unit/pkg/rpm/rpmbuild/BUILD/unit-php-1.28.0/build-debug
 # EXE=/usr/sbin/unitd-debug
 # MODULES=/usr/lib64/unit/modules
-CONTROL=/tmp/debug_unit_control.sock
-LOG=/tmp/debug_unit.log
-ACCESS_LOG=/tmp/debug_unit_access.log
-PIDF=/tmp/debug_unit.pid
+UNIT_RUN_DIR=/tmp/unit_debug
+STATE=${UNIT_RUN_DIR}/state
+CONTROL=${UNIT_RUN_DIR}/control.sock
+LOG=${UNIT_RUN_DIR}/unit.log
+ACCESS_LOG=${UNIT_RUN_DIR}/access.log
+PIDF=${UNIT_RUN_DIR}/debug_unit.pid
 BASE_URL=http://localhost:8080
+
+if [ ! -d /tmp/unit_debug ]; then
+    mkdir /tmp/unit_debug
+fi
 
 function unit_ps {
     ps -Alf | grep unit
@@ -24,7 +30,7 @@ function unit_enable_access_log {
 
 function unit_start {
     rm -f $LOG $ACCESS_LOG
-    $EXE --control unix:$CONTROL --log $LOG --pid $PIDF --user user --group group --modules $MODULES
+    $EXE --control unix:$CONTROL --state $STATE --log $LOG --pid $PIDF --user user --group group --modules $MODULES
     unit_ps
 }
 
@@ -58,10 +64,10 @@ function unit_delete_config {
 # unit_set_express_config
 # unit_enable_access_log
 # unit_show_config
-# curl ${BASE_URL}/static/index.html
+# curl ${BASE_URL}/static/
 # curl ${BASE_URL}/static/fred.html
-# curl ${BASE_URL}/example_php
-# curl ${BASE_URL}/express
+# curl ${BASE_URL}/example_php/
+# curl ${BASE_URL}/express/
 
 # echo "access log: " 
 # cat $ACCESS_LOG
