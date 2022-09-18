@@ -5,7 +5,9 @@
         }
      },
 
-    "routes": [
+    "routes": {
+        "base": 
+            [
                 {
                     "match": {
                         "uri": "/static*"
@@ -13,7 +15,11 @@
                     "action": {
                         "share": "/projects/git/mwoodpatrick/podman_systemd/nginx-unit/www/$uri"
                     }
-                },
+                }
+            ],
+
+        "example-php": 
+            [
                 {
                     "match": {
                         "uri": "/example_php*"
@@ -23,7 +29,8 @@
                         "pass": "applications/example_php"
                     }
                 }
-            ],
+            ]
+    },
 
     "applications": {
         "example_php": {
