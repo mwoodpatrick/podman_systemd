@@ -22,7 +22,17 @@
                     "action": {
                         "pass": "applications/example_php"
                     }
+                },
+                {
+                    "match": {
+                        "uri": "/example_node*"
+                    },
+
+                    "action": {
+                        "pass": "applications/example_node"
+                    }
                 }
+
             ],
 
     "applications": {
@@ -32,5 +42,11 @@
             "root": "/projects/git/mwoodpatrick/podman_systemd/nginx-unit/www/php",
             "index": "index.php"
         },
+        "example_node": {
+            "type": "external",
+            "working_directory": "/projects/git/mwoodpatrick/podman_systemd/nginx-unit/www/node/example",
+            "executable": "app.js"
+        }
     }
 }
+
